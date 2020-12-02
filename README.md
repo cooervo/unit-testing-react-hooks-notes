@@ -142,5 +142,36 @@ when testing the parent component.
 ###### Reasons to do this: 
 * You want to avoid the http call in the unit tests, otherwise it will throw false positives/errors.
 * You want to test a success or failure response then you mock whatever return value you need.
+
+
+#### 5. Mocking Redux state:
+
+Your component uses redux and you want to mock it for different redux states:
+
+    import { useSelector } from 'react-redux'; 
+
+    jest.mock('react-redux', () => ({
+      useSelector: jest.fn(),
+      useDispatch: jest.fn(),
+    }));
+    const mockUseSelector = useSelector as jest.Mock;
+    
+    describe('<MyComponent>', () => {
+      test('I use redux', () => {
+        mockUseSelector.mockImplementation((callback) =>
+          callback({
+            reducerName: {
+              foo: {
+                bar: 10,
+              },
+            },
+          }),
+        );
+        render(<MyComponent columnName="approved" />);
+    
+        const myComponent = screen.getByText('Load more');
+        expect(myComponent).toBeInTheDocument();
+      });
+
 -----
 
