@@ -143,7 +143,6 @@ when testing the parent component.
 * You want to avoid the http call in the unit tests, otherwise it will throw false positives/errors.
 * You want to test a success or failure response then you mock whatever return value you need.
 
-
 #### 5. Mocking Redux state:
 
 Your component uses redux and you want to mock it for different redux states:
@@ -173,5 +172,18 @@ Your component uses redux and you want to mock it for different redux states:
         expect(myComponent).toBeInTheDocument();
       });
 
+If your component uses dispatch as in: 
+
+    const dispatch = useDispatch();
+
+You will need to mock it this way:
+
+    jest.mock('react-redux', () => ({
+      useSelector: jest.fn(),
+      useDispatch: jest.fn().mockImplementation(() => jest.fn()),
+    }));
+
+
 -----
+
 
