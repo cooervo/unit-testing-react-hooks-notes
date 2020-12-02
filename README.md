@@ -56,9 +56,9 @@ We have decided to put unit tests next to tested files.
  ------
  ### Exports / Imports
  Due to mocking and to create convention it is better to always use similar approaches in the project. 
- * Please prefer default exports.
- * Exporting const or functions is okay although these are a bit more difficult to mock than default exports.
- * Please avoid barrel exports they are more difficult to mock.
+ * Prefer default exports these are the easiest to mock with jest.
+ * Exporting <Components> as non default const or functions is okay-ish, although these are a bit more difficult to mock than default exports.
+ * Please avoid barrel exports they are much more difficult to mock.
  
 -----
 ### General tips
@@ -71,6 +71,8 @@ test coverage is usually a waste of time for non-critical apps.
 * **mockFactories**: Use mockFactories to avoid repetition of Entities.
 * Remember to check `src/setupTests.ts` it has mocks shared in ALL the unit tests. If something needs to be mocked for 
 all tests this is the place to put it. But try to avoid it as much as possible. Usually its better to keep mocks as near as possible to the test.
+* **Divide and conquer**: If too many tests are failing (i.e.: more than 2), try to focus testing only the one you are more familiar with, 
+understand better, the easiest or shortest one. Once that one is solved, proceed with the next failing one. 
 -----
 
 ### Mocking examples for easy referencing:
@@ -141,6 +143,4 @@ when testing the parent component.
 * You want to avoid the http call in the unit tests, otherwise it will throw false positives/errors.
 * You want to test a success or failure response then you mock whatever return value you need.
 -----
-
-
 
