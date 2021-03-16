@@ -185,5 +185,19 @@ You will need to mock it this way:
 
 
 -----
+#### 5. Mocking a not default exported <Component>
 
+If you have a react component which is not default export which is actually a good practice:
+
+	export function MyComponentX() {
+	    return (
+		<div>...</div>
+	    );
+	}
+
+You can mock it in jest easily:
+
+	jest.mock('path/to/MyComponentX', () => ({
+	  MyComponentX: () => <>MOCK_MY_COMPONENT_X</>,
+	}));
 
