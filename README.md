@@ -126,7 +126,7 @@ when testing the parent component.
       })
       
     
-#### 4. Mocking an async http call
+#### 4. Mocking an async http call using Promise
 
     const spyPostNote = jest.spyOn(apiNote, 'postNote').mockImplementation(async () =>
       Promise.resolve({ // IMPORTANTE notice mocking prommise resolve, reject can also be mocked if needed
