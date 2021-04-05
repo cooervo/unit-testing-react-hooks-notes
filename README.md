@@ -30,9 +30,7 @@ Useful hints:
 ```
 	it("on click call RecaptchaService.getRecaptchaToken", async () => {
 	  // ...
-	  await act(async () => {
-	    fireEvent.click(getRecaptchaButton);
-	  });
+	  await userEvent.click(getRecaptchaButton);
 	  // ...
 	});
 ```
@@ -130,14 +128,14 @@ when testing the parent component.
     
 #### 4. Mocking an async http call
 
-    jest.mock('utilities/http/api/apiBreeder', () => ({
-      getBreeder: jest.fn(function async() {    //**NOTICE** the async
-        return {
-          json: { user: { breeders: [mockBreeder()] } },
-          status: 200,
-        };
-      }),
-    }));
+    const spyPostNote = jest.spyOn(apiNote, 'postNote').mockImplementation(async () =>
+      Promise.resolve({ // IMPORTANTE notice mocking prommise resolve, reject can also be mocked if needed
+        status: 200,
+        isOk: true,
+        json: { note: { message, id: 100, author } },
+      } as AppResponse<never>),
+    );
+    
 
 ###### Reasons to do this: 
 * You want to avoid the http call in the unit tests, otherwise it will throw false positives/errors.
